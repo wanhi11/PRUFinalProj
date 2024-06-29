@@ -1,8 +1,8 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Networking;
+using System;
 
 public class FinishGame : MonoBehaviour
 {
@@ -26,6 +26,8 @@ public class FinishGame : MonoBehaviour
         scoreText.text = ItemManager.Instance.GetTotalItems().ToString(); // Display the total score
         double time = timer.GetCurrentTime();
         timeText.text = time.ToString("F2"); // Display the total time
+
+        timer.StopTimer(); // Stop the timer when finishing
 
         // Save new record
         string username = PlayerPrefs.GetString("Username", "player");

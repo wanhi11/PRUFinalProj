@@ -3,6 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneController
 {
-  public static int Point;
-  public static float Timer;
+    public static int Point;
+    public static float Timer;
 }

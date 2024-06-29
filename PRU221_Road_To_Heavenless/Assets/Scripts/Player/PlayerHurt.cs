@@ -9,6 +9,7 @@ public class PlayerHurt : MonoBehaviour
     private Animator anim;
     private Rigidbody2D rb;
     private PhysicsMaterial2D originalMaterial;
+    private bool isTouchingDoor;
 
     void Start()
     {
@@ -44,6 +45,10 @@ public class PlayerHurt : MonoBehaviour
             ApplyKnockback(collision.gameObject.transform.position.x);
             StartCoroutine(RespawnAfterDelay());
         }
+        else if (collision.gameObject.CompareTag("Door"))
+        {
+            HandleDoorCollision();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -52,6 +57,10 @@ public class PlayerHurt : MonoBehaviour
         {
             ApplyKnockback(other.transform.position.x);
             StartCoroutine(RespawnAfterDelay());
+        }
+        else if (other.CompareTag("Door"))
+        {
+            HandleDoorCollision();
         }
     }
 
@@ -68,6 +77,25 @@ public class PlayerHurt : MonoBehaviour
         {
             rb.velocity = new Vector2(knockbackForce, rb.velocity.y);
         }
+    }
+
+    void HandleDoorCollision()
+    {
+        isTouchingDoor = true;
+
+        // Stop player movement and disable animations
+        if (playerMovement != null)
+        {
+            playerMovement.enabled = false;
+        }
+
+        if (anim != null)
+        {
+            anim.SetTrigger("idle"); // Ensure there's an "idle" trigger in the Animator
+        }
+
+        // Optionally, you might want to reset the velocity
+        rb.velocity = Vector2.zero;
     }
 
     IEnumerator RespawnAfterDelay()
@@ -88,7 +116,7 @@ public class PlayerHurt : MonoBehaviour
 
         rb.sharedMaterial = originalMaterial;
 
-        if (playerMovement != null)
+        if (playerMovement != null && !isTouchingDoor)
         {
             playerMovement.enabled = true;
         }

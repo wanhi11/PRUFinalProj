@@ -13,7 +13,7 @@ public class LeaderBoardService
     private readonly IMapper _mapper;
     private readonly IRepository<User, int> _userRepositoty;
 
-    public LeaderBoardService(IRepository<LeaderBoard, int> leaderBoardRepository, IRepository<User,int> useRepository, IMapper mapper)
+    public LeaderBoardService(IRepository<LeaderBoard, int> leaderBoardRepository, IRepository<User, int> useRepository, IMapper mapper)
     {
         _leaderBoardRepository = leaderBoardRepository;
         _mapper = mapper;
@@ -25,13 +25,13 @@ public class LeaderBoardService
         var player = _userRepositoty.FindByCondition(u => u.Username.Equals(username)).FirstOrDefault();
         if (player is null)
         {
-            throw new BadRequestException("Player does not existed");
+            throw new BadRequestException("Player does not exist");
         }
 
         var top = _leaderBoardRepository.FindByCondition(t => t.Userid.Equals(player.Userid))
             .OrderBy(x => x.Time)
             .FirstOrDefault();
-        if (top is null) throw new BadRequestException("This username have not played before");
+        if (top is null) throw new BadRequestException("This username has not played before");
         return _mapper.Map<LeaderBoardModel>(top);
     }
 
@@ -40,7 +40,7 @@ public class LeaderBoardService
         var player = _userRepositoty.FindByCondition(u => u.Username.Equals(username)).FirstOrDefault();
         if (player is null)
         {
-            throw new BadRequestException("Player does not existed");
+            throw new BadRequestException("Player does not exist");
         }
         var top = _leaderBoardRepository.FindByCondition(t => t.Userid.Equals(player.Userid)).OrderBy(x => x.Time).FirstOrDefault();
         if (top is null || top.Time > time)
@@ -50,8 +50,8 @@ public class LeaderBoardService
                 Time = time,
                 UserId = player.Userid
             }));
-            await _leaderBoardRepository.Commit();  
-            
+            await _leaderBoardRepository.Commit();
+
             return true;
         }
 
@@ -63,7 +63,7 @@ public class LeaderBoardService
         var topLeaderBoard = await _leaderBoardRepository.GetAll().OrderBy(x => x.Time).FirstOrDefaultAsync();
         if (topLeaderBoard is null)
         {
-            throw new BadRequestException("There is no one played before");
+            throw new BadRequestException("There is no one who has played before");
         }
 
         return _mapper.Map<LeaderBoardModel>(topLeaderBoard);
