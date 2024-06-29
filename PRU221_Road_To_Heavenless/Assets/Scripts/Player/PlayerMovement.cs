@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     // Called when the player collides with another collider
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) 
+        if (collision.gameObject.CompareTag("Ground"))
             anim.SetTrigger("grounded");
         grounded = true;
     }

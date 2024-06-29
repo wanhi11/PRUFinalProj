@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using Assets.Scripts;
 using TMPro;
 
 public class RoadToHeavenlessController : MonoBehaviour

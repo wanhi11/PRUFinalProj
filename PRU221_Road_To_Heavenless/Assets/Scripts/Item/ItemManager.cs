@@ -24,7 +24,7 @@ public class ItemManager : MonoBehaviour
     public void ChangeItems(int amount)
     {
         SceneController.Point += amount;
-        Debug.Log($"Item  : {SceneController.Point}");
+        Debug.Log($"Item count: {SceneController.Point}");
     }
 
     public int GetTotalItems()
@@ -42,10 +42,8 @@ public class ItemManager : MonoBehaviour
     {
         if (itemsDisplay != null)
         {
-            itemsDisplay.text = SceneController.Point.ToString(
-        )
-
-        ;
+            itemsDisplay.text = SceneController.Point.ToString();
         }
     }
 }
+

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using Assets.Scripts;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu, menuPanel;
@@ -49,7 +49,7 @@ public class PauseMenu : MonoBehaviour
     public void GoToMainMenu()
     {
         CurrentScreen.CurrentScreenPanel = 3;
-        SceneManager.LoadScene(0); 
+        SceneManager.LoadScene(0);
     }
 
     public void QuitGame()
